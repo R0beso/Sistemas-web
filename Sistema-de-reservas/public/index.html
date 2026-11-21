@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ReservaFácil · Sistema de reservas</title>
+  <meta name="description" content="Reserva tu próxima cita online en segundos. Elige servicio, profesional, fecha y hora.">
+  <meta name="theme-color" content="#4f46e5">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/" aria-label="Ir al inicio">
+        <span class="brand-mark"><svg class="icon"><use href="/assets/icons.svg#i-calendar"></use></svg></span>
+        <span class="brand-text">
+          <strong id="brand-name">ReservaFácil</strong>
+          <small>Reservas online</small>
+        </span>
+      </a>
+      <nav class="header-nav" aria-label="Navegación principal">
+        <a class="header-link" href="#como-funciona">Cómo funciona</a>
+        <button class="btn btn-ghost" type="button" data-open-lookup>
+          <svg class="icon"><use href="/assets/icons.svg#i-search"></use></svg>
+          <span>Mis reservas</span>
+        </button>
+        <a class="btn btn-primary" href="#reservar">
+          Reservar
+          <svg class="icon"><use href="/assets/icons.svg#i-arrow-right"></use></svg>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow"><span class="eyebrow-dot"></span> Agenda abierta · reserva online</span>
+          <h1>Tu próxima cita,<br><span class="highlight">en segundos</span>.</h1>
+          <p class="hero-sub" id="hero-tagline">
+            Reserva tu próxima cita en segundos, sin llamadas ni esperas.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary btn-lg" href="#reservar">
+              Reservar ahora
+              <svg class="icon"><use href="/assets/icons.svg#i-arrow-right"></use></svg>
+            </a>
+            <button class="btn btn-outline btn-lg" type="button" data-open-lookup>
+              <svg class="icon"><use href="/assets/icons.svg#i-search"></use></svg>
+              Consultar reserva
+            </button>
+          </div>
+          <ul class="hero-perks">
+            <li><span class="perk-check"><svg class="icon"><use href="/assets/icons.svg#i-check"></use></svg></span> Confirmación al instante</li>
+            <li><span class="perk-check"><svg class="icon"><use href="/assets/icons.svg#i-check"></use></svg></span> Disponibilidad real</li>
+            <li><span class="perk-check"><svg class="icon"><use href="/assets/icons.svg#i-check"></use></svg></span> Cancela cuando quieras</li>
+          </ul>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <div class="visual-orb orb-a"></div>
+          <div class="visual-orb orb-b"></div>
+          <div class="visual-card">
+            <div class="visual-card-top">
+              <span class="visual-app-icon"><svg class="icon"><use href="/assets/icons.svg#i-calendar"></use></svg></span>
+              <div class="visual-title">
+                <span>Reserva confirmada</span>
+                <strong>Código A1B2C3</strong>
+              </div>
+              <span class="visual-check"><svg class="icon"><use href="/assets/icons.svg#i-check"></use></svg></span>
+            </div>
+            <div class="visual-service">
+              <span class="visual-dot"></span>
+              <div>
+                <strong>Corte y estilo</strong>
+                <small>45 minutos · Ana García</small>
+              </div>
+              <span class="visual-price">$25</span>
+            </div>
+            <div class="visual-meta">
+              <div><small>Fecha</small><strong>Jueves, 5 nov</strong></div>
+              <div><small>Hora</small><strong>10:00 – 10:45</strong></div>
+            </div>
+            <div class="visual-slots">
+              <small>Otros horarios</small>
+              <div class="visual-slot-list">
+                <span>09:00</span>
+                <span class="active">10:00</span>
+                <span>11:30</span>
+                <span>16:00</span>
+              </div>
+            </div>
+          </div>
+          <div class="floating-chip chip-a">
+            <svg class="icon"><use href="/assets/icons.svg#i-check-circle"></use></svg>
+            Confirmación instantánea
+          </div>
+          <div class="floating-chip chip-b">
+            <svg class="icon"><use href="/assets/icons.svg#i-clock"></use></svg>
+            Horarios en tiempo real
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="booking-section" id="reservar">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">Reserva online</span>
+          <h2>Elige, confirma y listo</h2>
+          <p>Selecciona lo que necesitas y te mostramos solo los horarios disponibles.</p>
+        </div>
+
+        <div class="booking-shell">
+          <div class="booking-main">
+            <ol class="stepper" id="stepper" aria-label="Pasos de la reserva">
+              <li class="step is-active" data-step-item="1">
+                <button class="step-btn" type="button" data-step="1">
+                  <span class="step-number">1</span>
+                  <span class="step-label"><small>Paso 1</small><strong>Servicio</strong></span>
+                </button>
+              </li>
+              <li class="step" data-step-item="2">
+                <button class="step-btn" type="button" data-step="2">
+                  <span class="step-number">2</span>
+                  <span class="step-label"><small>Paso 2</small><strong>Profesional</strong></span>
+                </button>
+              </li>
+              <li class="step" data-step-item="3">
+                <button class="step-btn" type="button" data-step="3">
+                  <span class="step-number">3</span>
+                  <span class="step-label"><small>Paso 3</small><strong>Fecha y hora</strong></span>
+                </button>
+              </li>
+              <li class="step" data-step-item="4">
+                <button class="step-btn" type="button" data-step="4">
+                  <span class="step-number">4</span>
+                  <span class="step-label"><small>Paso 4</small><strong>Tus datos</strong></span>
+                </button>
+              </li>
+            </ol>
+
+            <div class="booking-content" id="booking-content" aria-live="polite">
+              <div class="loading-state">
+                <span class="spinner"></span>
+                <p>Cargando disponibilidad…</p>
+              </div>
+            </div>
+          </div>
+
+          <aside class="booking-side" aria-label="Resumen de la reserva">
+            <div class="summary-head">
+              <h3>Tu reserva</h3>
+              <span class="summary-badge">Resumen</span>
+            </div>
+            <div id="booking-summary">
+              <div class="summary-empty">
+                <span class="summary-empty-icon"><svg class="icon"><use href="/assets/icons.svg#i-calendar"></use></svg></span>
+                <p>Completa los pasos y verás aquí el detalle de tu cita.</p>
+              </div>
+            </div>
+            <div class="summary-help">
+              <svg class="icon"><use href="/assets/icons.svg#i-info"></use></svg>
+              <p>Sin pagos por adelantado. Recibirás un código para consultar o cancelar tu reserva.</p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="features" id="como-funciona">
+      <div class="container">
+        <div class="section-heading section-heading--center">
+          <span class="eyebrow">Así de simple</span>
+          <h2>Menos esperas, más tiempo para ti</h2>
+          <p>Un proceso claro, con disponibilidad actualizada en todo momento.</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <span class="feature-icon icon-indigo"><svg class="icon"><use href="/assets/icons.svg#i-search"></use></svg></span>
+            <h3>Encuentra tu horario</h3>
+            <p>Elige el servicio y la persona que prefieras. Solo verás huecos realmente disponibles.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-icon icon-orange"><svg class="icon"><use href="/assets/icons.svg#i-check-circle"></use></svg></span>
+            <h3>Confirma al instante</h3>
+            <p>Tu cita queda reservada en el momento. Guarda el código para consultarla cuando quieras.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-icon icon-sky"><svg class="icon"><use href="/assets/icons.svg#i-calendar"></use></svg></span>
+            <h3>Gestiona tu reserva</h3>
+            <p>Consulta los detalles o cancela con tu código, sin llamadas y sin complicaciones.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a class="brand brand--footer" href="/">
+          <span class="brand-mark"><svg class="icon"><use href="/assets/icons.svg#i-calendar"></use></svg></span>
+          <span class="brand-text"><strong data-brand-name>ReservaFácil</strong><small>Reservas online</small></span>
+        </a>
+        <p>Agenda simple para negocios que valoran el tiempo de sus clientes.</p>
+      </div>
+      <div class="footer-info">
+        <h4>Contacto</h4>
+        <p><svg class="icon"><use href="/assets/icons.svg#i-map-pin"></use></svg><span data-address>Av. Central 123, Ciudad</span></p>
+        <p><svg class="icon"><use href="/assets/icons.svg#i-phone"></use></svg><span data-phone>+1 555 0100</span></p>
+        <p><svg class="icon"><use href="/assets/icons.svg#i-mail"></use></svg><span data-email>hola@reservafacil.com</span></p>
+      </div>
+      <div class="footer-info">
+        <h4>Enlaces</h4>
+        <p><a href="#reservar">Reservar cita</a></p>
+        <p><a href="#" data-open-lookup>Consultar reserva</a></p>
+        <p><a href="/admin">Panel de administración</a></p>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <span>© <span id="current-year">2026</span> <span data-brand-name>ReservaFácil</span>. Todos los derechos reservados.</span>
+      <span>Hecho para simplificar tu agenda.</span>
+    </div>
+  </footer>
+
+  <div class="modal" id="lookup-modal" hidden>
+    <div class="modal-backdrop" data-close-lookup></div>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="lookup-title">
+      <button class="modal-close" type="button" aria-label="Cerrar" data-close-lookup>
+        <svg class="icon"><use href="/assets/icons.svg#i-x"></use></svg>
+      </button>
+      <div class="modal-heading">
+        <span class="modal-icon"><svg class="icon"><use href="/assets/icons.svg#i-search"></use></svg></span>
+        <div>
+          <h2 id="lookup-title">Consultar mi reserva</h2>
+          <p>Introduce el código que recibiste al reservar.</p>
+        </div>
+      </div>
+      <form class="lookup-form" id="lookup-form">
+        <label class="field">
+          <span>Código de reserva</span>
+          <input type="text" id="lookup-code" name="code" placeholder="Ej. DEMO1001" maxlength="12" autocomplete="off" required>
+        </label>
+        <button class="btn btn-primary" type="submit">
+          <svg class="icon"><use href="/assets/icons.svg#i-search"></use></svg>
+          Buscar reserva
+        </button>
+      </form>
+      <div id="lookup-result" class="lookup-result"></div>
+    </div>
+  </div>
+
+  <div class="toast-region" id="toast-region" role="status" aria-live="polite"></div>
+
+  <noscript>
+    <div class="noscript">Activa JavaScript para poder reservar online.</div>
+  </noscript>
+
+  <script src="/js/app.js" defer></script>
+</body>
+</html>

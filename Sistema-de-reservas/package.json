@@ -1,0 +1,26 @@
+{
+  "name": "sistema-de-reservas",
+  "version": "1.0.0",
+  "description": "Sistema de reservas multi-sector con panel de administración",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [
+    "reservas",
+    "citas",
+    "agenda",
+    "express",
+    "sqlite"
+  ],
+  "author": "",
+  "license": "MIT",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "dependencies": {
+    "express": "^4.22.3"
+  }
+}

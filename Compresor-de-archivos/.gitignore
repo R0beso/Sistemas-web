@@ -1,0 +1,22 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+
+# Entornos virtuales
+.venv/
+venv/
+env/
+
+# Salidas de pruebas
+.pytest_cache/
+.coverage
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Archivos comprimidos de ejemplo
+*.zip
+*.7z
+*.tar.gz
+*.tgz

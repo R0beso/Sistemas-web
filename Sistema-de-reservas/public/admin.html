@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administración · ReservaFácil</title>
+  <meta name="theme-color" content="#0e1226">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin-body">
+  <div class="login-screen" id="login-screen">
+    <div class="login-glow login-glow-a"></div>
+    <div class="login-glow login-glow-b"></div>
+    <div class="login-card">
+      <a class="brand brand--login" href="/">
+        <span class="brand-mark"><svg class="icon"><use href="/assets/icons.svg#i-calendar"></use></svg></span>
+        <span class="brand-text"><strong data-brand-name>ReservaFácil</strong><small>Administración</small></span>
+      </a>
+      <div class="login-heading">
+        <span class="login-icon"><svg class="icon"><use href="/assets/icons.svg#i-grid"></use></svg></span>
+        <h1>Bienvenido de nuevo</h1>
+        <p>Accede al panel para gestionar tu agenda, servicios y equipo.</p>
+      </div>
+      <form id="login-form" class="login-form">
+        <label class="field">
+          <span>Contraseña de administración</span>
+          <input type="password" name="password" id="login-password" placeholder="••••••••" required autocomplete="current-password">
+        </label>
+        <div class="login-error" id="login-error" hidden></div>
+        <button class="btn btn-primary btn-block btn-lg" type="submit" id="login-submit">
+          Entrar al panel
+          <svg class="icon"><use href="/assets/icons.svg#i-arrow-right"></use></svg>
+        </button>
+      </form>
+      <div class="login-foot">
+        <a href="/">← Volver al sitio público</a>
+        <span>La contraseña se configura en el README.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="admin-shell" id="admin-app" hidden>
+    <aside class="sidebar">
+      <a class="brand brand--sidebar" href="/">
+        <span class="brand-mark"><svg class="icon"><use href="/assets/icons.svg#i-calendar"></use></svg></span>
+        <span class="brand-text"><strong data-brand-name>ReservaFácil</strong><small>Administración</small></span>
+      </a>
+
+      <nav class="admin-nav" aria-label="Secciones del panel">
+        <button class="nav-item is-active" type="button" data-view="reservas">
+          <svg class="icon"><use href="/assets/icons.svg#i-grid"></use></svg>
+          <span>Reservas</span>
+        </button>
+        <button class="nav-item" type="button" data-view="servicios">
+          <svg class="icon"><use href="/assets/icons.svg#i-briefcase"></use></svg>
+          <span>Servicios</span>
+        </button>
+        <button class="nav-item" type="button" data-view="equipo">
+          <svg class="icon"><use href="/assets/icons.svg#i-users"></use></svg>
+          <span>Equipo y recursos</span>
+        </button>
+        <button class="nav-item" type="button" data-view="ajustes">
+          <svg class="icon"><use href="/assets/icons.svg#i-settings"></use></svg>
+          <span>Ajustes</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-foot">
+        <div class="sidebar-tip">
+          <svg class="icon"><use href="/assets/icons.svg#i-sparkles"></use></svg>
+          <p>Los horarios que configures se aplican al instante en la reserva online.</p>
+        </div>
+        <button class="nav-item nav-item--logout" type="button" id="logout-btn">
+          <svg class="icon"><use href="/assets/icons.svg#i-logout"></use></svg>
+          <span>Cerrar sesión</span>
+        </button>
+      </div>
+    </aside>
+
+    <main class="admin-main">
+      <header class="admin-topbar">
+        <div class="topbar-title">
+          <span class="admin-kicker">Panel de administración</span>
+          <h1 id="view-title">Reservas</h1>
+        </div>
+        <div class="topbar-right">
+          <span class="today-chip" id="today-chip"></span>
+          <a class="btn btn-outline btn-sm" href="/" target="_blank" rel="noopener">
+            <svg class="icon"><use href="/assets/icons.svg#i-arrow-right"></use></svg>
+            Ver sitio
+          </a>
+        </div>
+      </header>
+
+      <section class="view" id="view-reservas">
+        <div class="stats-grid" id="stats-grid">
+          <article class="stat-card"><div class="stat-skeleton skeleton" style="height:88px"></div></article>
+          <article class="stat-card"><div class="stat-skeleton skeleton" style="height:88px"></div></article>
+          <article class="stat-card"><div class="stat-skeleton skeleton" style="height:88px"></div></article>
+          <article class="stat-card"><div class="stat-skeleton skeleton" style="height:88px"></div></article>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <h2>Agenda de reservas</h2>
+              <p id="bookings-caption">Cargando reservas…</p>
+            </div>
+            <div class="panel-actions">
+              <button class="btn btn-ghost btn-sm" type="button" id="refresh-btn" title="Actualizar">
+                <svg class="icon"><use href="/assets/icons.svg#i-refresh"></use></svg>
+                <span>Actualizar</span>
+              </button>
+              <button class="btn btn-outline btn-sm" type="button" id="export-btn">
+                <svg class="icon"><use href="/assets/icons.svg#i-download"></use></svg>
+                <span>Exportar CSV</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="filters">
+            <div class="date-nav">
+              <button class="btn btn-icon btn-outline" type="button" id="prev-day" aria-label="Día anterior">
+                <svg class="icon"><use href="/assets/icons.svg#i-chevron-left"></use></svg>
+              </button>
+              <input class="input date-input" type="date" id="filter-date" aria-label="Filtrar por fecha">
+              <button class="btn btn-icon btn-outline" type="button" id="next-day" aria-label="Día siguiente">
+                <svg class="icon"><use href="/assets/icons.svg#i-chevron-right"></use></svg>
+              </button>
+              <button class="btn btn-soft btn-sm" type="button" id="today-btn">Hoy</button>
+            </div>
+            <div class="filters-right">
+              <label class="search-field">
+                <svg class="icon"><use href="/assets/icons.svg#i-search"></use></svg>
+                <input type="search" id="filter-query" placeholder="Buscar cliente, teléfono o código…" aria-label="Buscar reservas">
+              </label>
+              <select class="input select-input" id="filter-status" aria-label="Filtrar por estado">
+                <option value="">Todos los estados</option>
+                <option value="pending">Pendientes</option>
+                <option value="confirmed">Confirmadas</option>
+                <option value="completed">Completadas</option>
+                <option value="cancelled">Canceladas</option>
+              </select>
+              <button class="btn btn-ghost btn-sm" type="button" id="clear-filters">Limpiar</button>
+            </div>
+          </div>
+
+          <div id="bookings-list" class="bookings-list" aria-live="polite">
+            <div class="loading-state" style="min-height:280px">
+              <span class="spinner"></span>
+              <p>Cargando reservas…</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" id="view-servicios" hidden>
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <h2>Catálogo de servicios</h2>
+              <p>Define duración, precio y visibilidad de cada servicio.</p>
+            </div>
+            <button class="btn btn-primary btn-sm" type="button" id="new-service-btn">
+              <svg class="icon"><use href="/assets/icons.svg#i-plus"></use></svg>
+              Nuevo servicio
+            </button>
+          </div>
+          <div id="services-grid" class="entity-grid"></div>
+        </div>
+      </section>
+
+      <section class="view" id="view-equipo" hidden>
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <h2>Equipo y recursos</h2>
+              <p>Profesionales, salas o cualquier recurso reservable, con su horario semanal.</p>
+            </div>
+            <button class="btn btn-primary btn-sm" type="button" id="new-resource-btn">
+              <svg class="icon"><use href="/assets/icons.svg#i-plus"></use></svg>
+              Añadir recurso
+            </button>
+          </div>
+          <div id="resources-grid" class="entity-grid"></div>
+        </div>
+      </section>
+
+      <section class="view" id="view-ajustes" hidden>
+        <div class="settings-layout">
+          <form class="panel settings-panel" id="settings-form">
+            <div class="panel-head">
+              <div>
+                <h2>Datos del negocio</h2>
+                <p>Esta información aparece en la web pública y en la confirmación.</p>
+              </div>
+            </div>
+
+            <div class="settings-section">
+              <h3>Identidad</h3>
+              <div class="form-grid">
+                <label class="field full">
+                  <span>Nombre del negocio</span>
+                  <input type="text" name="business_name" required minlength="2" maxlength="60">
+                </label>
+                <label class="field full">
+                  <span>Frase de portada</span>
+                  <input type="text" name="business_tagline" maxlength="160">
+                </label>
+                <label class="field">
+                  <span>Símbolo de moneda</span>
+                  <input type="text" name="currency_symbol" maxlength="4" required>
+                </label>
+                <label class="field">
+                  <span>Correo de contacto</span>
+                  <input type="email" name="contact_email" maxlength="160">
+                </label>
+                <label class="field">
+                  <span>Teléfono de contacto</span>
+                  <input type="tel" name="contact_phone" maxlength="40">
+                </label>
+                <label class="field">
+                  <span>Dirección</span>
+                  <input type="text" name="address" maxlength="120">
+                </label>
+              </div>
+            </div>
+
+            <div class="settings-section">
+              <h3>Reservas</h3>
+              <div class="form-grid">
+                <label class="field">
+                  <span>Intervalo entre turnos (min)</span>
+                  <input type="number" name="slot_interval" min="5" max="120" step="5" required>
+                  <small>Ej. 30 genera turnos a las 09:00, 09:30, 10:00…</small>
+                </label>
+                <label class="field">
+                  <span>Anticipación máxima (días)</span>
+                  <input type="number" name="max_advance_days" min="1" max="365" required>
+                </label>
+                <label class="field">
+                  <span>Aviso mínimo para reservar (min)</span>
+                  <input type="number" name="lead_time_minutes" min="0" max="1440" step="15" required>
+                  <small>Tiempo mínimo antes del inicio de la cita.</small>
+                </label>
+                <label class="checkbox-field" style="align-self:end;padding-bottom:11px">
+                  <input type="checkbox" name="auto_confirm" id="auto-confirm">
+                  <span>Confirmar las reservas automáticamente</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="settings-actions">
+              <button class="btn btn-primary" type="submit" id="save-settings-btn">
+                <svg class="icon"><use href="/assets/icons.svg#i-check"></use></svg>
+                Guardar cambios
+              </button>
+            </div>
+          </form>
+
+          <aside class="panel settings-aside">
+            <div class="panel-head">
+              <div>
+                <h2>Seguridad</h2>
+                <p>Acceso al panel de administración.</p>
+              </div>
+            </div>
+            <div class="security-note">
+              <span class="security-icon"><svg class="icon"><use href="/assets/icons.svg#i-info"></use></svg></span>
+              <p>La contraseña del panel se define con la variable de entorno <code>ADMIN_PASSWORD</code> al iniciar el servidor.</p>
+            </div>
+            <div class="security-note">
+              <span class="security-icon"><svg class="icon"><use href="/assets/icons.svg#i-check-circle"></use></svg></span>
+              <p>La sesión se cierra automáticamente a las 12 horas o al pulsar «Cerrar sesión».</p>
+            </div>
+            <button class="btn btn-danger btn-block" type="button" id="logout-btn-2">
+              <svg class="icon"><use href="/assets/icons.svg#i-logout"></use></svg>
+              Cerrar sesión
+            </button>
+          </aside>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="admin-modal-root"></div>
+  <div class="toast-region" id="toast-region" role="status" aria-live="polite"></div>
+
+  <script src="/js/admin.js" defer></script>
+</body>
+</html>

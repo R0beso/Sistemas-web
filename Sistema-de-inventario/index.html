@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema de Inventario</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📦</text></svg>">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="app">
+    <!-- ===== Sidebar ===== -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">📦</div>
+        <div>
+          <div class="brand-name">Inventario</div>
+          <div class="brand-sub">Sistema de control</div>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Navegación principal">
+        <button class="nav-btn active" data-view="productos" type="button">
+          <span class="nav-icon" data-icon="box"></span>
+          <span>Productos</span>
+          <span class="nav-badge hidden" id="badge-low">0</span>
+        </button>
+        <button class="nav-btn" data-view="movimientos" type="button">
+          <span class="nav-icon" data-icon="swap"></span>
+          <span>Movimientos</span>
+        </button>
+        <button class="nav-btn" data-view="reportes" type="button">
+          <span class="nav-icon" data-icon="chart"></span>
+          <span>Reportes</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="btn btn-ghost btn-block" type="button" data-action="export-json">
+          <span data-icon="download"></span> Exportar datos
+        </button>
+        <button class="btn btn-ghost btn-block" type="button" data-action="import-json">
+          <span data-icon="upload"></span> Importar datos
+        </button>
+        <input type="file" id="file-import" accept="application/json,.json" hidden>
+        <p class="version">v1.0 · los datos se guardan en tu navegador</p>
+      </div>
+    </aside>
+
+    <!-- ===== Main ===== -->
+    <main class="main">
+
+      <!-- Vista: Productos -->
+      <section class="view" id="view-productos" aria-label="Productos">
+        <header class="view-header">
+          <div>
+            <h1>Productos</h1>
+            <p class="subtitle" id="products-summary">Cargando…</p>
+          </div>
+          <div class="header-actions">
+            <button class="btn btn-primary" type="button" data-action="new-product">
+              <span data-icon="plus"></span> Nuevo producto
+            </button>
+          </div>
+        </header>
+
+        <div class="alert-banner hidden" id="low-stock-banner">
+          <span data-icon="alert"></span>
+          <span id="low-stock-text"></span>
+          <button class="btn btn-sm" type="button" data-action="show-low-stock">Ver alertas</button>
+        </div>
+
+        <div class="card toolbar">
+          <div class="input-icon grow">
+            <span data-icon="search"></span>
+            <input type="search" id="search-input" placeholder="Buscar por nombre o SKU…" autocomplete="off">
+          </div>
+          <select id="filter-category" aria-label="Filtrar por categoría">
+            <option value="">Todas las categorías</option>
+          </select>
+          <select id="filter-status" aria-label="Filtrar por estado de stock">
+            <option value="">Todo el stock</option>
+            <option value="alert">⚠ Requieren atención</option>
+            <option value="ok">Stock OK</option>
+            <option value="low">Stock bajo</option>
+            <option value="out">Agotado</option>
+          </select>
+        </div>
+
+        <div class="card table-card">
+          <div class="table-scroll">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>SKU</th>
+                  <th>Producto</th>
+                  <th>Existencia</th>
+                  <th class="right">Precio</th>
+                  <th class="right">Valor</th>
+                  <th class="center">Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="products-body"></tbody>
+            </table>
+          </div>
+          <div class="empty hidden" id="products-empty">
+            <div class="empty-icon" aria-hidden="true">🔍</div>
+            <p class="empty-title">No se encontraron productos</p>
+            <p class="muted">Ajusta la búsqueda o los filtros, o agrega un producto nuevo.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Vista: Movimientos -->
+      <section class="view hidden" id="view-movimientos" aria-label="Movimientos">
+        <header class="view-header">
+          <div>
+            <h1>Movimientos</h1>
+            <p class="subtitle" id="movements-summary">Registro de entradas, salidas y ajustes de stock.</p>
+          </div>
+        </header>
+
+        <form class="card move-form" id="movement-form" novalidate></form>
+
+        <div class="card toolbar">
+          <div class="input-icon grow">
+            <span data-icon="search"></span>
+            <input type="search" id="move-search" placeholder="Buscar por producto o nota…" autocomplete="off">
+          </div>
+          <select id="move-filter-type" aria-label="Filtrar por tipo de movimiento">
+            <option value="">Todos los tipos</option>
+            <option value="entrada">Entradas</option>
+            <option value="salida">Salidas</option>
+            <option value="ajuste">Ajustes</option>
+          </select>
+        </div>
+
+        <div class="card table-card">
+          <div class="table-scroll">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Producto</th>
+                  <th>Tipo</th>
+                  <th class="right">Cantidad</th>
+                  <th class="right">Stock resultante</th>
+                  <th>Nota</th>
+                </tr>
+              </thead>
+              <tbody id="movements-body"></tbody>
+            </table>
+          </div>
+          <div class="empty hidden" id="movements-empty">
+            <div class="empty-icon" aria-hidden="true">🧾</div>
+            <p class="empty-title">Sin movimientos registrados</p>
+            <p class="muted">Usa el formulario de arriba para registrar tu primera entrada o salida.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Vista: Reportes -->
+      <section class="view hidden" id="view-reportes" aria-label="Reportes">
+        <header class="view-header">
+          <div>
+            <h1>Reportes</h1>
+            <p class="subtitle">Resumen del inventario y herramientas de datos.</p>
+          </div>
+        </header>
+
+        <div class="kpi-grid" id="kpi-grid"></div>
+
+        <div class="report-grid">
+          <div class="card">
+            <div class="card-head">
+              <h2>Valor por categoría</h2>
+              <p class="muted small">Distribución del valor del inventario</p>
+            </div>
+            <div class="table-scroll">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Categoría</th>
+                    <th class="right">SKUs</th>
+                    <th class="right">Unidades</th>
+                    <th class="right">Valor</th>
+                    <th class="pct-col">% del total</th>
+                  </tr>
+                </thead>
+                <tbody id="category-body"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <h2>Productos de mayor valor</h2>
+              <p class="muted small">Top 5 por existencia × precio</p>
+            </div>
+            <div id="top-products"></div>
+          </div>
+
+          <div class="card">
+            <div class="card-head row-between">
+              <div>
+                <h2>Reabastecimiento sugerido</h2>
+                <p class="muted small">Productos por debajo del stock mínimo</p>
+              </div>
+              <button class="btn btn-sm" type="button" data-action="copy-list">
+                <span data-icon="file"></span> Copiar lista
+              </button>
+            </div>
+            <div id="reorder-list"></div>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <h2>Gestión de datos</h2>
+              <p class="muted small">Exporta, importa o restablece tu inventario</p>
+            </div>
+            <div class="data-actions">
+              <button class="btn btn-block" type="button" data-action="export-csv">
+                <span data-icon="download"></span> Exportar productos (CSV)
+              </button>
+              <button class="btn btn-block" type="button" data-action="export-json">
+                <span data-icon="download"></span> Exportar respaldo completo (JSON)
+              </button>
+              <button class="btn btn-block" type="button" data-action="import-json">
+                <span data-icon="upload"></span> Importar respaldo (JSON)
+              </button>
+              <hr>
+              <button class="btn btn-block" type="button" data-action="reset-seed">
+                <span data-icon="refresh"></span> Restaurar datos de ejemplo
+              </button>
+              <button class="btn btn-block btn-danger-outline" type="button" data-action="clear-all">
+                <span data-icon="trash"></span> Vaciar inventario
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-overlay hidden" id="modal-overlay">
+    <div class="modal" id="modal-box" role="dialog" aria-modal="true"></div>
+  </div>
+
+  <!-- Toasts -->
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+
+  <script src="js/ui.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/movements.js"></script>
+  <script src="js/inventory.js"></script>
+  <script src="js/reports.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
